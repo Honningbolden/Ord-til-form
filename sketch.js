@@ -23,7 +23,22 @@ function preload() {
 }
 
 function setup() {
-  let canvas = createCanvas(842, 1191);
+  let canvasAspectRatio = 842 / 1191;
+  let windowAspectRatio = windowWidth / windowHeight;
+  let canvasWidth, canvasHeight;
+
+  if (windowAspectRatio > canvasAspectRatio) {
+    // Window is wider than the canvas aspect ratio, so constrain by height
+    canvasHeight = windowHeight;
+    canvasWidth = canvasHeight * canvasAspectRatio;
+  } else {
+    // Window is taller than the canvas aspect ratio, so constrain by width
+    canvasWidth = windowWidth;
+    canvasHeight = canvasWidth / canvasAspectRatio;
+  }
+
+  let canvas = createCanvas(canvasWidth, canvasHeight);
+  
   canvas.parent("canvasContainer");
   imageMode(CENTER);
   titleFont = textFont("breakers", 128);
